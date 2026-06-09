@@ -1,21 +1,21 @@
 import express, { Express, Request, Response } from 'express';
-import mongoose from 'mongoose';
+import connectDatabase from './config/database';
 
 const app: Express = express();
 const PORT = 8000;
-const MONGODB_URI = 'mongodb://localhost:27017/octofit';
 
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Connect to MongoDB
-mongoose.connect(MONGODB_URI)
+connectDatabase()
   .then(() => {
-    console.log('Connected to MongoDB');
+    console.log('Server initialized successfully');
   })
   .catch((error) => {
-    console.error('MongoDB connection error:', error);
+    console.error('Failed to start server:', error);
+    process.exit(1);
   });
 
 // Routes
