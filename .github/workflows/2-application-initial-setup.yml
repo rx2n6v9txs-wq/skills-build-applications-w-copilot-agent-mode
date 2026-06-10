@@ -33,6 +33,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      - name: Debug: show frontend package.json
+        if: ${{ always() }}
+        run: |
+          echo "Checked out commit: $(git rev-parse HEAD)"
+          echo "--- octofit-tracker/frontend/package.json ---"
+          sed -n '1,200p' octofit-tracker/frontend/package.json || true
+          echo "--- grep result ---"
+          grep -Fn '"react": "^19' octofit-tracker/frontend/package.json || true
+
       - name: Get response templates
         uses: actions/checkout@v6
         with:
